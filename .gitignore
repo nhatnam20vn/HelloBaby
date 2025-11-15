@@ -40,10 +40,10 @@
 const board = document.getElementById('board');
 const size = 14;
 
-// Unicode chess pieces for 4 players (white, black, red, blue)
+// Unicode chess pieces for 4 players (yellow, blue, red, blue)
 const pieces = {
-  white: { R: "♖", N: "♘", B: "♗", Q: "♕", K: "♔", P: "♙" },
-  black: { R: "♜", N: "♞", B: "♝", Q: "♛", K: "♚", P: "♟" },
+  yellow: { R: "♖", N: "♘", B: "♗", Q: "♕", K: "♔", P: "♙" },
+  blue: { R: "♜", N: "♞", B: "♝", Q: "♛", K: "♚", P: "♟" },
   red: { R: "♖", N: "♘", B: "♗", Q: "♕", K: "♔", P: "♙" },
   blue: { R: "♜", N: "♞", B: "♝", Q: "♛", K: "♚", P: "♟" },
 };
