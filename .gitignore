@@ -1,27 +1,98 @@
-# Compiled class file
-*.class
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4 Player Chess (uhh it's FFA)</title>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #eee;
+  }
+  #board {
+    display: grid;
+    grid-template-columns: repeat(14, 50px);
+    grid-template-rows: repeat(14, 50px);
+    border: 2px solid #333;
+  }
+  .cell {
+    width: 50px;
+    height: 50px;
+    box-sizing: border-box;
+  }
+  .white { background-color: #f0d9b5; }
+  .black { background-color: #b58863; }
+  .piece {
+    font-size: 32px;
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div id="board"></div>
 
-# Log file
-*.log
+<script>
+const board = document.getElementById('board');
+const size = 14;
 
-# BlueJ files
-*.ctxt
+// Unicode chess pieces for 4 players (white, black, red, blue)
+const pieces = {
+  white: { R: "♖", N: "♘", B: "♗", Q: "♕", K: "♔", P: "♙" },
+  black: { R: "♜", N: "♞", B: "♝", Q: "♛", K: "♚", P: "♟" },
+  red: { R: "♖", N: "♘", B: "♗", Q: "♕", K: "♔", P: "♙" },
+  blue: { R: "♜", N: "♞", B: "♝", Q: "♛", K: "♚", P: "♟" },
+};
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+// Create board cells
+for (let row = 0; row < size; row++) {
+  for (let col = 0; col < size; col++) {
+    const cell = document.createElement('div');
+    cell.classList.add('cell');
+    if ((row + col) % 2 === 0) cell.classList.add('white');
+    else cell.classList.add('black');
+    board.appendChild(cell);
+  }
+}
 
-# Package Files #
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
+// Initial positions example (simplified, just pawns for now)
+const cells = board.children;
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-replay_pid*
+// Top (Red) pawns
+for (let i = 3; i < 11; i++) {
+  cells[i].innerHTML = `<div class="piece">${pieces.red.P}</div>`;
+}
+// Bottom (Blue) pawns
+for (let i = 182; i < 190; i++) {
+  cells[i].innerHTML = `<div class="piece">${pieces.blue.P}</div>`;
+}
+// Left (White) pawns
+for (let i = 14*2; i < 14*3; i++) {
+  if (i % 14 < 2 || i % 14 > 11) continue;
+  cells[i].innerHTML = `<div class="piece">${pieces.white.P}</div>`;
+}
+// Right (Black) pawns
+for (let i = 14*10; i < 14*11; i++) {
+  if (i % 14 < 2 || i % 14 > 11) continue;
+  cells[i].innerHTML = `<div class="piece">${pieces.black.P}</div>`;
+}
 
-# Kotlin Gradle plugin data, see https://kotlinlang.org/docs/whatsnew20.html#new-directory-for-kotlin-data-in-gradle-projects
-.kotlin/
+// Drag and drop (simplified)
+let selectedPiece = null;
+board.addEventListener('click', e => {
+  if (e.target.classList.contains('piece')) {
+    selectedPiece = e.target;
+  } else if (selectedPiece && e.target.classList.contains('cell')) {
+    if (!e.target.querySelector('.piece')) {
+      e.target.appendChild(selectedPiece);
+      selectedPiece = null;
+    }
+  }
+});
+</script>
+</body>
+</html>
